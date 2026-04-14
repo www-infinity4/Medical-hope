@@ -1,32 +1,45 @@
 /**
  * RiskCard.jsx
  *
- * Displays the structured analysis result returned by the signal engine.
- * Visually separates low / medium / high / emergency risk levels.
- * Always includes a safety disclaimer footer.
+ * Premium result card — displays structured analysis output.
+ * Visually distinct for low / medium / high / emergency.
+ * Always includes a safety disclaimer.
  */
 
 const RISK_META = {
-  low:       { color: '#22c55e', bg: '#14532d22', label: 'LOW RISK' },
-  medium:    { color: '#eab308', bg: '#71380022', label: 'MEDIUM RISK' },
-  high:      { color: '#f97316', bg: '#7c2d1222', label: 'HIGH RISK' },
-  emergency: { color: '#ef4444', bg: '#7f1d1d44', label: '🚨 EMERGENCY' }
+  low:       { color: 'var(--low)',       bg: 'var(--low-bg)',       border: 'var(--low-border)',       label: 'Low Risk',    dot: '●' },
+  medium:    { color: 'var(--medium)',     bg: 'var(--medium-bg)',     border: 'var(--medium-border)',     label: 'Medium Risk', dot: '●' },
+  high:      { color: 'var(--high)',       bg: 'var(--high-bg)',       border: 'var(--high-border)',       label: 'High Risk',   dot: '●' },
+  emergency: { color: 'var(--emergency)',  bg: 'var(--emergency-bg)',  border: 'var(--emergency-border)',  label: 'Emergency',   dot: '🚨' }
 }
 
 function RiskBadge({ level }) {
   const meta = RISK_META[level] || RISK_META.low
   return (
-    <span className="risk-badge" style={{ backgroundColor: meta.color, color: level === 'medium' ? '#1a1a2e' : '#fff' }}>
+    <span
+      className="risk-badge"
+      style={{
+        background: meta.bg,
+        color: meta.color,
+        border: `1px solid ${meta.border}`,
+        boxShadow: `0 0 12px ${meta.bg}`
+      }}
+    >
+      <span style={{ fontSize: level === 'emergency' ? '0.75rem' : '0.5rem' }}>{meta.dot}</span>
       {meta.label}
     </span>
   )
 }
 
 function ConfidenceBar({ confidence }) {
-  const color = confidence > 70 ? '#7c3aed' : confidence > 40 ? '#a78bfa' : '#c4b5fd'
+  const pct = Math.min(100, Math.max(0, confidence))
+  const color = pct > 70 ? 'var(--accent)' : pct > 40 ? 'var(--accent-lite)' : 'var(--text-muted)'
   return (
     <div className="confidence-track">
-      <div className="confidence-fill" style={{ width: `${confidence}%`, backgroundColor: color }} />
+      <div
+        className="confidence-fill"
+        style={{ width: `${pct}%`, background: `linear-gradient(90deg, var(--accent-dark), ${color})` }}
+      />
     </div>
   )
 }
@@ -36,18 +49,23 @@ export default function RiskCard({ analysis }) {
 
   const { summary, possibleCauses, riskLevel, recommendedActions, emergencyFlags, tags, disclaimer } = analysis
   const meta = RISK_META[riskLevel] || RISK_META.low
+  const isEmergency = riskLevel === 'emergency'
+  const isHigh = riskLevel === 'high'
 
   return (
-    <div className="risk-card" style={{ borderColor: meta.color, boxShadow: `0 0 0 1px ${meta.color}33` }}>
+    <div
+      className="risk-card"
+      style={{ borderColor: meta.border }}
+    >
       {/* Emergency banner */}
-      {riskLevel === 'emergency' && (
+      {isEmergency && (
         <div className="emergency-banner">
           <span className="emergency-icon">🚨</span>
           <div>
             <strong>EMERGENCY — Seek urgent medical care now</strong>
             {emergencyFlags?.length > 0 && (
               <p className="emergency-flags">
-                Detected signals: {emergencyFlags.join(', ')}
+                Detected: {emergencyFlags.join(' · ')}
               </p>
             )}
           </div>
@@ -55,26 +73,29 @@ export default function RiskCard({ analysis }) {
       )}
 
       {/* High-risk alert */}
-      {riskLevel === 'high' && (
+      {isHigh && (
         <div className="high-alert">
-          ⚠ High-risk signals detected. Seek medical attention within 24 hours.
+          <span>⚠</span>
+          <span>High-risk signals detected — seek medical attention within 24 hours.</span>
         </div>
       )}
 
-      {/* Header */}
+      {/* Header row */}
       <div className="risk-header">
-        <h3 className="risk-title">Analysis Results</h3>
+        <h3 className="risk-title">Signal Analysis</h3>
         <RiskBadge level={riskLevel} />
       </div>
 
       {/* Summary */}
       <p className="risk-summary">{summary}</p>
 
-      {/* Two-column grid */}
+      <div className="risk-divider" />
+
+      {/* Two-column detail grid */}
       <div className="risk-grid">
         {/* Possible Causes */}
         <div className="risk-section">
-          <h4 className="risk-section-title">Possible Causes</h4>
+          <h4 className="risk-section-title">Pattern Match</h4>
           {possibleCauses?.map((cause, i) => (
             <div key={i} className="cause-item">
               <div className="cause-row">
@@ -90,12 +111,17 @@ export default function RiskCard({ analysis }) {
         <div className="risk-section">
           <h4 className="risk-section-title">Recommended Actions</h4>
           <ul className="actions-list">
-            {recommendedActions?.map((action, i) => <li key={i}>{action}</li>)}
+            {recommendedActions?.map((action, i) => (
+              <li key={i}>
+                <span className="action-num">{i + 1}</span>
+                <span>{action}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
 
-      {/* Tags */}
+      {/* Signal tags */}
       {tags?.length > 0 && (
         <div className="tags-row">
           {tags.map(t => (

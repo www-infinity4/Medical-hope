@@ -22,10 +22,15 @@ const RISK_LABELS = {
 }
 
 function RiskPill({ level }) {
+  const color = RISK_COLORS[level] || '#6b7280'
   return (
     <span
       className="risk-pill"
-      style={{ backgroundColor: RISK_COLORS[level] || '#6b7280', color: level === 'medium' ? '#1a1a2e' : '#fff' }}
+      style={{
+        background: `${color}18`,
+        color,
+        border: `1px solid ${color}35`
+      }}
     >
       {RISK_LABELS[level] || level?.toUpperCase()}
     </span>
@@ -58,7 +63,7 @@ function HistoryItem({ record }) {
           <RiskPill level={riskLevel} />
           <span className="history-time">{formattedDate}</span>
         </div>
-        <span className="expand-toggle">{expanded ? '▲' : '▼'}</span>
+        <span className="expand-toggle">▾</span>
       </div>
 
       <p className="history-symptom">
@@ -150,7 +155,8 @@ export default function HistoryPanel() {
 
       {!loading && cases.length === 0 && (
         <div className="empty-state">
-          <p>No cases yet. Analyze your first symptom to begin tracking.</p>
+          <span className="empty-state-icon">📡</span>
+          <p>No signals analyzed yet. Submit your first case to begin tracking patterns.</p>
         </div>
       )}
 

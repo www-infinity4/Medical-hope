@@ -18,12 +18,10 @@ import './styles.css'
 export default function App() {
   const [analysis, setAnalysis] = useState(null)
   const [rightTab, setRightTab] = useState('history')
-  // Refresh key causes HistoryPanel to re-mount after a new analysis
   const [historyKey, setHistoryKey] = useState(0)
 
   const handleResult = (data) => {
     setAnalysis(data)
-    // Switch to history tab and force a refresh so the new case appears
     setRightTab('history')
     setHistoryKey(k => k + 1)
   }
@@ -32,7 +30,7 @@ export default function App() {
     <div className="app">
       {/* Always-visible safety disclaimer */}
       <div className="disclaimer-banner">
-        ⚠️&nbsp;<strong>Medical Disclaimer:</strong>&nbsp;
+        <strong>Medical Disclaimer:</strong>&nbsp;
         This platform provides informational pattern analysis only — it is <em>not</em> medical advice.
         Always consult a qualified healthcare professional. In an emergency, call 911.
       </div>
@@ -40,10 +38,16 @@ export default function App() {
       {/* Header */}
       <header className="app-header">
         <div className="header-inner">
-          <span className="logo-icon">∞</span>
-          <div>
-            <h1 className="logo-title">Infinity Signal Health</h1>
-            <p className="logo-sub">Self-evolving AI-powered health signal detection</p>
+          <div className="header-brand">
+            <div className="logo-mark" aria-hidden="true">∞</div>
+            <div className="logo-text">
+              <span className="logo-title">Infinity Signal Health</span>
+              <span className="logo-sub">Early-warning health signal intelligence</span>
+            </div>
+          </div>
+          <div className="header-status" role="status" aria-label="System online">
+            <span className="status-dot" />
+            LIVE
           </div>
         </div>
       </header>
@@ -67,13 +71,13 @@ export default function App() {
               className={`tab-btn ${rightTab === 'history' ? 'active' : ''}`}
               onClick={() => setRightTab('history')}
             >
-              🕑 History
+              Signal History
             </button>
             <button
               className={`tab-btn ${rightTab === 'knowledge' ? 'active' : ''}`}
               onClick={() => setRightTab('knowledge')}
             >
-              📚 Knowledge
+              Knowledge Base
             </button>
           </div>
 
@@ -83,7 +87,7 @@ export default function App() {
       </main>
 
       <footer className="app-footer">
-        <p>© {new Date().getFullYear()} Infinity Signal Health — Pattern aggregation & rule improvement scaffolding. Not a diagnostic tool.</p>
+        <p>© {new Date().getFullYear()} Infinity Signal Health — Pattern aggregation & decision-support scaffolding. Not a diagnostic tool.</p>
       </footer>
     </div>
   )
