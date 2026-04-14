@@ -1,1 +1,304 @@
-[]
+[
+  {
+    "id": "1820c839-02c5-4bcd-a8c9-fa112fd33ac5",
+    "timestamp": "2026-04-14T03:06:05.705Z",
+    "rawInput": {
+      "symptom": "I have cloudy urine with a bad smell and I have not been drinking water all day, feeling dizzy and tired",
+      "hydrationLevel": "very_low",
+      "hasFever": false,
+      "hasPain": false
+    },
+    "structuredInput": {
+      "symptomText": "I have cloudy urine with a bad smell and I have not been drinking water all day, feeling dizzy and tired",
+      "duration": null,
+      "ageGroup": null,
+      "hydrationLevel": "very_low",
+      "hasPain": false,
+      "hasFever": false
+    },
+    "analysisResult": {
+      "summary": "Based on the signals provided, the most likely concern is Dehydration (medium risk).",
+      "possibleCauses": [
+        {
+          "id": "dehydration",
+          "name": "Dehydration",
+          "confidence": 29,
+          "matchedKeywords": [
+            "dizzy",
+            "tired"
+          ]
+        },
+        {
+          "id": "uti",
+          "name": "Urinary Tract Infection (UTI)",
+          "confidence": 13,
+          "matchedKeywords": [
+            "cloudy urine",
+            "smell"
+          ]
+        }
+      ],
+      "riskLevel": "medium",
+      "recommendedActions": [
+        "Drink at least 8 glasses (2 litres) of water daily",
+        "Use electrolyte drinks if sweating or vomiting",
+        "Avoid diuretics like caffeine during recovery",
+        "Monitor urine colour — aim for pale straw yellow",
+        "Consult a doctor for possible antibiotic treatment",
+        "Increase fluid intake — water and unsweetened cranberry juice",
+        "Avoid caffeine and alcohol until symptoms resolve",
+        "Do not delay treatment; untreated UTIs can reach the kidneys"
+      ],
+      "emergencyFlags": [],
+      "tags": [
+        "uti",
+        "dehydration"
+      ],
+      "isEmergency": false,
+      "disclaimer": "This is not medical advice. Seek professional care for serious or worsening symptoms. If you are experiencing an emergency, call 911 or your local emergency number immediately.",
+      "engineVersion": "1.0.0-rules",
+      "processedAt": "2026-04-14T03:06:05.704Z"
+    },
+    "tags": [
+      "uti",
+      "dehydration"
+    ]
+  },
+  {
+    "id": "b4fc7438-7fe9-4789-abfb-f3afcd802c3e",
+    "timestamp": "2026-04-14T03:06:05.736Z",
+    "rawInput": {
+      "symptom": "severe chest pain and difficulty breathing, I cannot breathe"
+    },
+    "structuredInput": {
+      "symptomText": "severe chest pain and difficulty breathing, I cannot breathe",
+      "duration": null,
+      "ageGroup": null,
+      "hydrationLevel": null,
+      "hasPain": false,
+      "hasFever": false
+    },
+    "analysisResult": {
+      "summary": "Emergency signals detected. Immediate medical attention required.",
+      "possibleCauses": [
+        {
+          "id": "respiratory",
+          "name": "Respiratory Concern",
+          "confidence": 15,
+          "matchedKeywords": [
+            "difficulty breathing"
+          ]
+        }
+      ],
+      "riskLevel": "emergency",
+      "recommendedActions": [
+        "🚨 CALL 911 OR YOUR LOCAL EMERGENCY NUMBER IMMEDIATELY",
+        "Do not drive yourself — call for emergency assistance",
+        "Stay calm and stay on the line with emergency services",
+        "Rest and avoid physical exertion",
+        "Use a humidifier and stay hydrated",
+        "Consult a doctor if breathing difficulty persists"
+      ],
+      "emergencyFlags": [
+        "chest pain",
+        "cannot breathe",
+        "difficulty breathing"
+      ],
+      "tags": [
+        "emergency",
+        "respiratory"
+      ],
+      "isEmergency": true,
+      "disclaimer": "This is not medical advice. Seek professional care for serious or worsening symptoms. If you are experiencing an emergency, call 911 or your local emergency number immediately.",
+      "engineVersion": "1.0.0-rules",
+      "processedAt": "2026-04-14T03:06:05.735Z"
+    },
+    "tags": [
+      "emergency",
+      "respiratory"
+    ]
+  },
+  {
+    "id": "3b22680f-5d53-41e2-9be7-f9e2f64223c9",
+    "timestamp": "2026-04-14T03:10:47.030Z",
+    "rawInput": {
+      "symptom": "cloudy urine smell not drinking water dizzy fatigue",
+      "hydrationLevel": "very_low",
+      "hasFever": false,
+      "hasPain": false,
+      "ageGroup": "adult",
+      "duration": "1 day"
+    },
+    "structuredInput": {
+      "symptomText": "cloudy urine smell not drinking water dizzy fatigue",
+      "duration": "1 day",
+      "ageGroup": "adult",
+      "hydrationLevel": "very_low",
+      "hasPain": false,
+      "hasFever": false
+    },
+    "analysisResult": {
+      "summary": "Based on the signals provided, the most likely concern is Dehydration (medium risk).",
+      "possibleCauses": [
+        {
+          "id": "dehydration",
+          "name": "Dehydration",
+          "confidence": 41,
+          "matchedKeywords": [
+            "not drinking",
+            "not drinking water",
+            "dizzy",
+            "fatigue"
+          ]
+        },
+        {
+          "id": "uti",
+          "name": "Urinary Tract Infection (UTI)",
+          "confidence": 13,
+          "matchedKeywords": [
+            "cloudy urine",
+            "smell"
+          ]
+        }
+      ],
+      "riskLevel": "medium",
+      "recommendedActions": [
+        "Drink at least 8 glasses (2 litres) of water daily",
+        "Use electrolyte drinks if sweating or vomiting",
+        "Avoid diuretics like caffeine during recovery",
+        "Monitor urine colour — aim for pale straw yellow",
+        "Consult a doctor for possible antibiotic treatment",
+        "Increase fluid intake — water and unsweetened cranberry juice",
+        "Avoid caffeine and alcohol until symptoms resolve",
+        "Do not delay treatment; untreated UTIs can reach the kidneys"
+      ],
+      "emergencyFlags": [],
+      "tags": [
+        "uti",
+        "dehydration"
+      ],
+      "isEmergency": false,
+      "disclaimer": "This is not medical advice. Seek professional care for serious or worsening symptoms. If you are experiencing an emergency, call 911 or your local emergency number immediately.",
+      "engineVersion": "1.0.0-rules",
+      "processedAt": "2026-04-14T03:10:47.029Z"
+    },
+    "tags": [
+      "uti",
+      "dehydration"
+    ]
+  },
+  {
+    "id": "663dc0c2-29d5-412f-bec8-e0a9dc30181e",
+    "timestamp": "2026-04-14T03:10:47.045Z",
+    "rawInput": {
+      "symptom": "bad back pain flank pain foamy urine swollen ankles",
+      "hasFever": true,
+      "hasPain": true
+    },
+    "structuredInput": {
+      "symptomText": "bad back pain flank pain foamy urine swollen ankles",
+      "duration": null,
+      "ageGroup": null,
+      "hydrationLevel": null,
+      "hasPain": true,
+      "hasFever": true
+    },
+    "analysisResult": {
+      "summary": "Based on the signals provided, the most likely concern is Kidney Stress / Kidney Issue (high risk).",
+      "possibleCauses": [
+        {
+          "id": "kidney_stress",
+          "name": "Kidney Stress / Kidney Issue",
+          "confidence": 42,
+          "matchedKeywords": [
+            "back pain",
+            "flank pain",
+            "foamy urine",
+            "swollen ankles"
+          ]
+        },
+        {
+          "id": "uti",
+          "name": "Urinary Tract Infection (UTI)",
+          "confidence": 8,
+          "matchedKeywords": []
+        }
+      ],
+      "riskLevel": "high",
+      "recommendedActions": [
+        "Schedule a kidney function test (blood creatinine + urine albumin)",
+        "Monitor urine output and colour daily",
+        "Reduce sodium and avoid NSAID pain relievers",
+        "Stay well hydrated unless otherwise directed by your doctor",
+        "Consult a doctor for possible antibiotic treatment",
+        "Increase fluid intake — water and unsweetened cranberry juice",
+        "Avoid caffeine and alcohol until symptoms resolve",
+        "Do not delay treatment; untreated UTIs can reach the kidneys"
+      ],
+      "emergencyFlags": [],
+      "tags": [
+        "uti",
+        "kidney_stress",
+        "high_risk"
+      ],
+      "isEmergency": false,
+      "disclaimer": "This is not medical advice. Seek professional care for serious or worsening symptoms. If you are experiencing an emergency, call 911 or your local emergency number immediately.",
+      "engineVersion": "1.0.0-rules",
+      "processedAt": "2026-04-14T03:10:47.045Z"
+    },
+    "tags": [
+      "uti",
+      "kidney_stress",
+      "high_risk"
+    ]
+  },
+  {
+    "id": "40900fcd-fcd7-43da-8bc5-4e1026d8abb1",
+    "timestamp": "2026-04-14T03:10:47.068Z",
+    "rawInput": {
+      "symptom": "severe chest pain cannot breathe"
+    },
+    "structuredInput": {
+      "symptomText": "severe chest pain cannot breathe",
+      "duration": null,
+      "ageGroup": null,
+      "hydrationLevel": null,
+      "hasPain": false,
+      "hasFever": false
+    },
+    "analysisResult": {
+      "summary": "Emergency signals detected. Immediate medical attention required.",
+      "possibleCauses": [
+        {
+          "id": "emergency",
+          "name": "Acute Medical Emergency",
+          "confidence": 10,
+          "matchedKeywords": [
+            "chest pain",
+            "cannot breathe"
+          ]
+        }
+      ],
+      "riskLevel": "emergency",
+      "recommendedActions": [
+        "🚨 CALL 911 OR YOUR LOCAL EMERGENCY NUMBER IMMEDIATELY",
+        "Do not drive yourself — call for emergency assistance",
+        "Stay calm and stay on the line with emergency services"
+      ],
+      "emergencyFlags": [
+        "chest pain",
+        "cannot breathe"
+      ],
+      "tags": [
+        "emergency"
+      ],
+      "isEmergency": true,
+      "disclaimer": "This is not medical advice. Seek professional care for serious or worsening symptoms. If you are experiencing an emergency, call 911 or your local emergency number immediately.",
+      "engineVersion": "1.0.0-rules",
+      "processedAt": "2026-04-14T03:10:47.068Z"
+    },
+    "tags": [
+      "emergency"
+    ]
+  }
+]
