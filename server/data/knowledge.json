@@ -1,0 +1,150 @@
+{
+  "entries": [
+    {
+      "id": "dehydration",
+      "title": "Dehydration",
+      "summary": "Dehydration occurs when the body loses more fluid than it takes in. Common signals include dark or concentrated urine, dry mouth, fatigue, dizziness, and infrequent urination. Increasing water intake and electrolyte balance are the first steps.",
+      "relatedTags": [
+        "dehydration"
+      ],
+      "commonSymptoms": [
+        "dark urine",
+        "dry mouth",
+        "dizziness",
+        "fatigue",
+        "headache",
+        "not urinating"
+      ],
+      "caseCount": 2,
+      "recentExamples": [
+        "I have cloudy urine with a bad smell and I have not been drinking water all day, feeling dizzy and tired",
+        "cloudy urine smell not drinking water dizzy fatigue"
+      ],
+      "lastUpdated": "2026-04-14T03:10:47.070Z"
+    },
+    {
+      "id": "uti",
+      "title": "Urinary Tract Infection (UTI)",
+      "summary": "UTIs are among the most common bacterial infections. Key signals include cloudy or foul-smelling urine, burning or painful urination, and increased urgency. When fever or back pain are also present, the infection may have reached the kidneys.",
+      "relatedTags": [
+        "uti"
+      ],
+      "commonSymptoms": [
+        "cloudy urine",
+        "burning urination",
+        "frequent urination",
+        "urgency",
+        "odor"
+      ],
+      "caseCount": 3,
+      "recentExamples": [
+        "I have cloudy urine with a bad smell and I have not been drinking water all day, feeling dizzy and tired",
+        "cloudy urine smell not drinking water dizzy fatigue",
+        "bad back pain flank pain foamy urine swollen ankles"
+      ],
+      "lastUpdated": "2026-04-14T03:10:47.070Z"
+    },
+    {
+      "id": "kidney_stress",
+      "title": "Kidney Stress",
+      "summary": "The kidneys filter waste from the blood. Early stress signals include persistent back or flank pain, foamy urine (protein leakage), reduced urine output, and ankle or leg swelling. Early detection through blood and urine tests can prevent progression to chronic kidney disease.",
+      "relatedTags": [
+        "kidney_stress"
+      ],
+      "commonSymptoms": [
+        "flank pain",
+        "foamy urine",
+        "swelling",
+        "reduced urination",
+        "back pain"
+      ],
+      "caseCount": 1,
+      "recentExamples": [
+        "bad back pain flank pain foamy urine swollen ankles"
+      ],
+      "lastUpdated": "2026-04-14T03:10:47.070Z"
+    },
+    {
+      "id": "diabetes_warning",
+      "title": "Diabetes Warning Signals",
+      "summary": "Unmanaged blood sugar can produce recognisable signals including excessive thirst, frequent urination, unexplained weight loss, blurred vision, and slow wound healing. A fasting glucose test or HbA1c blood test provides a definitive answer.",
+      "relatedTags": [
+        "diabetes_warning"
+      ],
+      "commonSymptoms": [
+        "frequent urination",
+        "excessive thirst",
+        "blurred vision",
+        "fatigue",
+        "slow healing"
+      ],
+      "caseCount": 0,
+      "recentExamples": [],
+      "lastUpdated": "2026-04-14T03:10:47.070Z"
+    },
+    {
+      "id": "respiratory",
+      "title": "Respiratory Concern",
+      "summary": "Respiratory signals range from mild congestion to severe breathing difficulty. Persistent shortness of breath, wheezing, or chest tightness — especially with fever — warrant prompt medical evaluation.",
+      "relatedTags": [
+        "respiratory"
+      ],
+      "commonSymptoms": [
+        "shortness of breath",
+        "coughing",
+        "wheezing",
+        "chest tightness",
+        "phlegm"
+      ],
+      "caseCount": 1,
+      "recentExamples": [
+        "severe chest pain and difficulty breathing, I cannot breathe"
+      ],
+      "lastUpdated": "2026-04-14T03:10:47.070Z"
+    },
+    {
+      "id": "general",
+      "title": "General Health Monitoring",
+      "summary": "Not every symptom maps to a specific condition immediately. General fatigue, low energy, mild discomfort, and sleep disruption are worth tracking over time. Pattern detection across multiple inputs can surface emerging health trends.",
+      "relatedTags": [
+        "general",
+        "high_risk"
+      ],
+      "commonSymptoms": [
+        "fatigue",
+        "general discomfort",
+        "mild pain",
+        "low energy",
+        "sleep issues"
+      ],
+      "caseCount": 1,
+      "recentExamples": [
+        "bad back pain flank pain foamy urine swollen ankles"
+      ],
+      "lastUpdated": "2026-04-14T03:10:47.070Z"
+    }
+  ],
+  "trendSummary": [
+    {
+      "tag": "uti",
+      "count": 3
+    },
+    {
+      "tag": "dehydration",
+      "count": 2
+    },
+    {
+      "tag": "emergency",
+      "count": 2
+    },
+    {
+      "tag": "respiratory",
+      "count": 1
+    },
+    {
+      "tag": "kidney_stress",
+      "count": 1
+    }
+  ],
+  "lastRebuilt": "2026-04-14T03:10:47.070Z"
+}
