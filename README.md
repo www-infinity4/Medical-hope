@@ -1,115 +1,134 @@
-# ∞ Infinity Signal Health
+# New Hope — Powered by Infinity
 
-> **Self-evolving AI-powered health signal detection platform.**
-> Pattern aggregation & rule-improvement scaffolding — *not a diagnostic tool.*
+New Hope is the mission-facing protection and support platform for women and children. Infinity is the reusable technology backbone beneath it: identity and consent, protected records, benefits, scheduling, service coordination, communications, and open module architecture.
 
----
+This repository now contains the first New Hope website experience and the existing **Infinity Signal Health** prototype as its first working service module.
 
-## ⚠️ Safety Disclaimer
-
-**This platform is for informational and educational purposes only.**
-It does **not** provide medical advice, diagnosis, or treatment.
-All outputs describe *possible patterns and risk signals* based on keyword matching — they are not clinical assessments.
-
-> If you are experiencing a medical emergency, call **911** or your local emergency number immediately.
-> Always consult a qualified healthcare professional for any medical concern.
+> **Current status:** development software and service architecture. It is not an operating emergency shelter, licensed healthcare provider, or replacement for professional medical, legal, or emergency services.
 
 ---
 
-## What It Does
+## Core Structure
 
-Infinity Signal Health is a **pre-diagnosis intelligence layer** that:
+```text
+New Hope
+├── Mission and public experience
+│   ├── Safety and protected pathways
+│   ├── Women-and-children service network
+│   ├── Housing and stability
+│   ├── Children and family continuity
+│   ├── Learning, work, and economic support
+│   └── Governance and accountability
+│
+└── Infinity backbone
+    ├── Identity and consent
+    ├── Privacy and role-based access
+    ├── Benefits and accountable funding
+    ├── Scheduling and referrals
+    ├── Protected communications
+    ├── Service records and audit history
+    └── Open modules for approved builders
+```
 
-1. **Accepts health signal inputs** — symptom text plus optional structured fields (duration, age group, hydration level, pain, fever)
-2. **Classifies signals** using a weighted rules engine (replaceable by ML later) into possible causes with confidence scores
-3. **Assigns a risk level** — `low`, `medium`, `high`, or `emergency`
-4. **Recommends actions** — drink water, see a doctor, call 911, etc.
-5. **Stores every case** and builds a continuously-evolving knowledge base from accumulated patterns
-6. **Surfaces trends** — most common symptoms, recurring tags, highest-risk recent patterns
+## Website Experience
+
+The React frontend has been expanded from a single health dashboard into a complete New Hope landing experience with:
+
+- A high-end responsive homepage and navigation system
+- A clear New Hope / Infinity relationship
+- Six connected service areas
+- A visual support-flow explanation
+- Funding and benefits architecture language
+- Consent, privacy, governance, and accountability principles
+- The original health-signal application preserved as **Working Module 01**
+
+### Service Areas
+
+| Service area | Purpose |
+|---|---|
+| Safe Path | Private safety planning, protected referrals, and transportation coordination |
+| Health Access | Health navigation, appointment preparation, and pattern tracking |
+| Children & Family | Childcare, school continuity, records, and routines |
+| Housing & Stability | Shelter pathways, transitional housing, and long-term independence |
+| Learning & Work | Education, employment, business-building, and AI assistance |
+| Infinity Benefits | Accountable benefits, sponsor funding, approved credits, and disbursement records |
 
 ---
 
-## Current Features
+## Working Module 01: Infinity Signal Health
+
+Infinity Signal Health is an informational pattern-tracking workspace. It accepts symptom text and optional structured fields, applies a weighted rules engine, assigns a risk category, records case history, and builds a knowledge board from stored patterns.
+
+It is **not a diagnostic system**. Its purpose is to help organize information and prepare a person to seek qualified care.
+
+### Current health-module features
 
 | Layer | Feature |
 |---|---|
-| Intake | Free-text symptom input + optional structured fields |
-| Analysis | Weighted rules engine (riskRules.js) |
+| Intake | Free-text symptom input and optional structured fields |
+| Analysis | Weighted rules engine in `riskRules.js` |
 | Risk levels | low / medium / high / emergency |
-| Causes | UTI, Dehydration, Kidney Stress, Diabetes Warning, Respiratory, Emergency |
-| Actions | Ranked, actionable suggestions per cause |
-| Safety | Always-visible disclaimer; emergency escalation alert |
-| Storage | Every case persisted to `server/data/cases.json` |
-| Knowledge | Auto-generated evolving topic cards from case patterns |
-| History | Clickable, expandable case history newest-first |
-| Improvement loop | Knowledge rebuilt from all cases on every server start |
+| Causes | UTI, dehydration, kidney stress, diabetes warning, respiratory, emergency |
+| Actions | Ranked informational suggestions per matched cause |
+| Safety | Always-visible disclaimer and emergency escalation notice |
+| Storage | Cases persisted to `server/data/cases.json` |
+| Knowledge | Topic cards generated from accumulated case patterns |
+| History | Expandable case history, newest first |
 
 ---
 
 ## Architecture
 
-```
-infinity-signal-health/
-├── client/                     # React + Vite frontend (port 5173)
+```text
+Medical-hope/
+├── client/                         # React + Vite frontend
 │   └── src/
-│       ├── App.jsx             # Two-column layout wiring
-│       ├── styles.css          # Dark theme design system
+│       ├── App.jsx                 # New Hope site + embedded health workspace
+│       ├── new-hope.css            # New Hope responsive visual system
+│       ├── styles.css              # Existing health-module design system
 │       ├── main.jsx
 │       └── components/
-│           ├── SignalInput.jsx     # Intake form (text + optional fields)
-│           ├── RiskCard.jsx        # Analysis results display
-│           ├── HistoryPanel.jsx    # Case history list (expandable)
-│           └── KnowledgePanel.jsx  # Living knowledge board
+│           ├── SignalInput.jsx
+│           ├── RiskCard.jsx
+│           ├── HistoryPanel.jsx
+│           └── KnowledgePanel.jsx
 │
-├── server/                     # Node.js + Express API (port 3001)
-│   ├── index.js                # App entry — starts improvement loop on boot
+├── server/                         # Node.js + Express API
+│   ├── index.js
 │   ├── routes/
-│   │   ├── analyze.js          # POST /api/analyze
-│   │   ├── history.js          # GET  /api/history
-│   │   └── knowledge.js        # GET  /api/knowledge
+│   │   ├── analyze.js
+│   │   ├── history.js
+│   │   └── knowledge.js
 │   ├── services/
-│   │   ├── riskRules.js        # Rules with weighted keyword matching
-│   │   ├── signalEngine.js     # Core analysis logic (AI-replaceable)
-│   │   ├── knowledgeBuilder.js # Scans cases → generates knowledge.json
-│   │   └── storage.js          # JSON file I/O (cases + knowledge)
+│   │   ├── riskRules.js
+│   │   ├── signalEngine.js
+│   │   ├── knowledgeBuilder.js
+│   │   └── storage.js
 │   └── data/
-│       ├── cases.json          # Persisted case records
-│       └── knowledge.json      # Auto-generated knowledge base
+│       ├── cases.json
+│       └── knowledge.json
 │
-├── package.json                # Root workspace
+├── package.json
 └── README.md
 ```
 
 ---
 
-## How to Run
-
-### 1. Install dependencies
+## Run Locally
 
 ```bash
 npm run install:all
-# or manually:
-cd server && npm install
-cd ../client && npm install
+npm run dev:server
+npm run dev:client
 ```
 
-### 2. Start the backend (Terminal 1)
+The API runs on port `3001`. The Vite client runs on port `5173`.
+
+Build the client with:
 
 ```bash
-cd server && npm run dev
-# Server runs at http://localhost:3001
+npm run build
 ```
-
-### 3. Start the frontend (Terminal 2)
-
-```bash
-cd client && npm run dev
-# App runs at http://localhost:5173
-```
-
-### 4. Open the app
-
-Navigate to **http://localhost:5173**
 
 ---
 
@@ -117,75 +136,43 @@ Navigate to **http://localhost:5173**
 
 | Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/analyze` | Analyze symptom text + optional fields |
-| GET | `/api/history` | All stored cases, newest first |
-| GET | `/api/knowledge` | Auto-generated knowledge base |
-| GET | `/api/health` | Health check |
-
-### POST `/api/analyze` — Request body
-
-```json
-{
-  "symptom": "cloudy urine with bad smell, dizzy",
-  "duration": "2 days",
-  "ageGroup": "adult",
-  "hydrationLevel": "low",
-  "hasPain": false,
-  "hasFever": false
-}
-```
-
-### POST `/api/analyze` — Response
-
-```json
-{
-  "id": "uuid",
-  "timestamp": "ISO string",
-  "summary": "Most likely concern is Dehydration (medium risk).",
-  "possibleCauses": [
-    { "id": "dehydration", "name": "Dehydration", "confidence": 60 },
-    { "id": "uti", "name": "Urinary Tract Infection (UTI)", "confidence": 45 }
-  ],
-  "riskLevel": "medium",
-  "recommendedActions": ["Drink at least 8 glasses of water daily", "..."],
-  "emergencyFlags": [],
-  "tags": ["dehydration", "uti"],
-  "isEmergency": false,
-  "disclaimer": "This is not medical advice..."
-}
-```
+| POST | `/api/analyze` | Analyze supplied symptom information |
+| GET | `/api/history` | Return stored cases, newest first |
+| GET | `/api/knowledge` | Return the generated knowledge board |
+| GET | `/api/health` | Server health check |
 
 ---
 
-## Continuous Improvement Loop
+## Protection Rules
 
-On every server start, `knowledgeBuilder.js`:
-1. Reads all stored cases
-2. Counts tag/cause frequencies
-3. Builds enriched topic entries with real case counts
-4. Saves to `knowledge.json`
+The New Hope architecture should continue to enforce these requirements as it grows:
 
-On every new analysis:
-- Case is saved to `cases.json`
-- Knowledge base is rebuilt asynchronously in the background
-
-This means the platform **automatically improves its knowledge base** the more it is used — without any manual intervention.
+1. Participation is voluntary and consent can be withdrawn.
+2. Shelter locations and sensitive records are not exposed through public interfaces.
+3. Access is role-based, logged, reviewable, and revocable.
+4. AI does not secretly rank a person’s worthiness for safety.
+5. Medical, legal, and child-safety decisions remain with qualified professionals.
+6. Donations, sponsorship fees, product revenue, grants, and benefits are accounted for separately.
+7. Complaints and appeals are handled outside the same person or system that made the disputed decision.
 
 ---
 
-## Planned Future Modules
+## Planned Modules
 
-The codebase is structured so these can be added cleanly:
-
-- [ ] **Image analysis module** — urine colour detection from photos
-- [ ] **Voice input** — Web Speech API integration
-- [ ] **Hydration tracker** — daily fluid intake logging
-- [ ] **Medication reminder** — scheduled reminders
-- [ ] **Pattern clustering** — group similar cases for richer knowledge
-- [ ] **AI model integration** — swap `signalEngine.js` for an LLM call
+- Protected intake and consent manager
+- Housing and referral navigator
+- Transportation coordination
+- Childcare and school-continuity workspace
+- Benefits ledger and sponsor-funding dashboard
+- Employment, education, and business-builder tools
+- Secure document vault
+- Provider and partner portal
+- Women-led advisory and governance dashboard
+- Voice input and accessibility tools
+- Pattern clustering and carefully reviewed AI assistance
 
 ---
 
-## License
+## Safety Notice
 
-Open source — educational use only. See disclaimer above.
+In an immediate emergency, call 911 or the appropriate local emergency number. Medical concerns should be reviewed by a qualified healthcare professional. This repository is open development software and does not establish that New Hope services are currently operating in any location.
