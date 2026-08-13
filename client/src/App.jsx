@@ -1,317 +1,71 @@
-import { useState } from 'react'
-import SignalInput from './components/SignalInput.jsx'
-import RiskCard from './components/RiskCard.jsx'
-import HistoryPanel from './components/HistoryPanel.jsx'
-import KnowledgePanel from './components/KnowledgePanel.jsx'
-import './styles.css'
-import './new-hope.css'
+import { useMemo, useState } from 'react'
+import { analyzeSignal, loadCases, saveCase } from './healthRuntime.js'
 
-const services = [
-  {
-    title: 'Safe Path',
-    description: 'Private safety planning, protected referrals, transportation coordination, and a clear route toward stable housing.',
-    status: 'Protection module',
-  },
-  {
-    title: 'Health Access',
-    description: 'Health navigation, appointment preparation, pattern tracking, and connections to qualified medical professionals.',
-    status: 'Health module',
-  },
-  {
-    title: 'Children & Family',
-    description: 'Childcare coordination, school continuity, family records, routines, and tools that reduce disruption during transition.',
-    status: 'Family module',
-  },
-  {
-    title: 'Housing & Stability',
-    description: 'A structured path from immediate shelter needs to transitional housing, income planning, and long-term independence.',
-    status: 'Stability module',
-  },
-  {
-    title: 'Learning & Work',
-    description: 'Education, skills, employment, business-building, and practical AI assistance designed around each woman’s goals.',
-    status: 'Opportunity module',
-  },
-  {
-    title: 'Infinity Benefits',
-    description: 'An accountable benefits ledger for approved services, assistance credits, sponsor funding, and transparent disbursement.',
-    status: 'Economic module',
-  },
+const systems = [
+  {id:'signals',short:'Signal',title:'Health Signal Workspace',copy:'Turn observations into a private, structured record that can help prepare a conversation with qualified care.',status:'OPERATING'},
+  {id:'research',short:'Research',title:'Evidence Refinery',copy:'Separate proposed ideas, sourced evidence, simulations, experiments, and reproduced results before public claims are advanced.',status:'BUILD QUEUE'},
+  {id:'bio',short:'Bio Lab',title:'Bio-Humanoid Prototype Lab',copy:'Route material, sensing, movement, safety, and body-system concepts through simulation and low-energy prototypes first.',status:'PROTOTYPE'},
+  {id:'robot',short:'Robots',title:'Robot Production Studio',copy:'Readers, writers, designers, error memory, and production robots refine each project and prepare reviewable builds.',status:'SCANNING'}
 ]
 
-const flow = [
-  ['Listen', 'A woman defines what support she needs and what information may be shared.'],
-  ['Protect', 'The system separates sensitive records, location data, and access permissions.'],
-  ['Coordinate', 'New Hope connects housing, health, family, transportation, education, and work services.'],
-  ['Stabilize', 'Progress is tracked around the woman’s own plan rather than an institution’s convenience.'],
+const cards = [
+  ['Pattern Reader','Find signals, numbers, contradictions, missing data, and recurring conditions.'],
+  ['Evidence Auditor','Keep a theory from being presented as an established medical or scientific result.'],
+  ['3D Systems Artist','Turn verified system relationships into dimensional models and interactive displays.'],
+  ['Production Robot','Convert approved research into specifications, tests, prototypes, and draft pull requests.']
 ]
 
-export default function App() {
-  const [analysis, setAnalysis] = useState(null)
-  const [rightTab, setRightTab] = useState('history')
-  const [historyKey, setHistoryKey] = useState(0)
+function LivingCore({active}) {
+  return <div className={`core core-${active}`} aria-label="Interactive living systems model">
+    <div className="core-halo halo-a"/><div className="core-halo halo-b"/>
+    <div className="core-orbit orbit-a"><i/><i/><i/></div>
+    <div className="core-orbit orbit-b"><i/><i/></div>
+    <div className="core-center"><span>MH</span><small>{active.toUpperCase()}</small></div>
+    <div className="core-grid"/>
+  </div>
+}
 
-  const handleResult = (data) => {
-    setAnalysis(data)
-    setRightTab('history')
-    setHistoryKey((key) => key + 1)
+function SignalLab({onSaved}) {
+  const [symptom,setSymptom]=useState('')
+  const [hasPain,setPain]=useState(false)
+  const [hasFever,setFever]=useState(false)
+  const [busy,setBusy]=useState(false)
+  const [result,setResult]=useState(null)
+  async function run(){
+    if(!symptom.trim()) return
+    setBusy(true)
+    const record=await analyzeSignal({symptom,hasPain,hasFever})
+    const normalized=record.rawInput ? record : {...record,id:`case-${Date.now()}`,timestamp:new Date().toISOString(),rawInput:{symptom,hasPain,hasFever},level:record.riskLevel==='emergency'?'urgent':record.riskLevel==='high'?'attention':'observe',matches:(record.possibleCauses||[]).map(c=>({id:c.id,label:c.name,matched:c.matchedKeywords||[]})),actions:record.recommendedActions||[],source:record.source}
+    setResult(normalized); saveCase(normalized); onSaved(); setBusy(false)
   }
+  return <section className="signal-lab" id="signal-lab">
+    <div className="section-kicker">WORKING MODULE 01</div><h2>Record a health signal.</h2>
+    <p className="section-copy">Runs on the phone even when the optional server is unavailable. Entries remain on this device.</p>
+    <textarea aria-label="Health observations" value={symptom} onChange={e=>setSymptom(e.target.value)} placeholder="Describe what you observed, when it started, and what changed…"/>
+    <div className="check-row"><label><input type="checkbox" checked={hasPain} onChange={e=>setPain(e.target.checked)}/> Pain reported</label><label><input type="checkbox" checked={hasFever} onChange={e=>setFever(e.target.checked)}/> Fever reported</label></div>
+    <button className="primary" disabled={!symptom.trim()||busy} onClick={run}>{busy?'Organizing…':'Organize signal'}</button>
+    {result&&<article className={`result result-${result.level}`}><div className="result-top"><strong>{result.level==='urgent'?'Urgent warning pattern':'Informational pattern result'}</strong><span>{result.source==='connected-api'?'CONNECTED ENGINE':'ON-DEVICE ENGINE'}</span></div><p>{result.summary}</p><div className="match-list">{result.matches?.map(m=><span key={m.id}>{m.label}</span>)}</div><ol>{result.actions?.slice(0,4).map(a=><li key={a}>{a}</li>)}</ol><small>{result.disclaimer}</small></article>}
+  </section>
+}
 
-  return (
-    <div className="app">
-      <div className="disclaimer-banner">
-        <strong>Development platform:</strong>&nbsp;
-        New Hope is a service architecture and working software project, not an emergency shelter or licensed medical provider.
-        In an immediate emergency, call 911.
-      </div>
+function History({version}){
+  const cases=useMemo(()=>loadCases(),[version])
+  return <section className="history"><div><div className="section-kicker">PRIVATE DEVICE HISTORY</div><h2>{cases.length} recorded signal{cases.length===1?'':'s'}</h2></div>{cases.length===0?<p className="empty">No endless loading screen. Your first saved signal will appear here.</p>:<div className="history-grid">{cases.slice(0,6).map(c=><article key={c.id}><span>{c.level}</span><p>{c.rawInput?.symptom}</p><small>{new Date(c.timestamp).toLocaleString()}</small></article>)}</div>}</section>
+}
 
-      <header className="hope-nav">
-        <div className="hope-nav-inner">
-          <a className="hope-brand" href="#top" aria-label="New Hope home">
-            <span className="hope-brand-mark" aria-hidden="true">NH</span>
-            <span className="hope-brand-copy">
-              <strong>New Hope</strong>
-              <small>Protected by the Infinity backbone</small>
-            </span>
-          </a>
-
-          <nav className="hope-nav-links" aria-label="Primary navigation">
-            <a href="#services">Services</a>
-            <a href="#backbone">Infinity backbone</a>
-            <a href="#health">Health workspace</a>
-            <a href="#governance">Governance</a>
-            <a className="hope-nav-cta" href="#health">Open workspace</a>
-          </nav>
-        </div>
-      </header>
-
-      <main id="top" className="hope-main">
-        <section className="hope-hero">
-          <div>
-            <p className="hope-eyebrow">New Hope · Powered by Infinity</p>
-            <h1>
-              A protected path forward
-              <span className="hope-gradient-text">for women and children.</span>
-            </h1>
-            <p className="hope-hero-lead">
-              New Hope is the mission-facing service network. Infinity is the shared technology, benefits,
-              privacy, and coordination backbone that helps every support module work together without making
-              women repeat their story at every doorway.
-            </p>
-            <div className="hope-hero-actions">
-              <a className="hope-primary-btn" href="#services">Explore the service network</a>
-              <a className="hope-secondary-btn" href="#backbone">See how Infinity connects it</a>
-            </div>
-            <p className="hope-hero-note">
-              Built as a consent-based, privacy-first platform blueprint. No forced placement, hidden scoring, or unrestricted record sharing.
-            </p>
-          </div>
-
-          <div className="hope-orbit-card" aria-label="New Hope service system illustration">
-            <div className="hope-orbit-center">
-              <div>
-                <strong>New Hope</strong>
-                <span>Women and children first</span>
-              </div>
-            </div>
-            <div className="hope-orbit-node">
-              <strong>Safety</strong>
-              <span>Private planning</span>
-            </div>
-            <div className="hope-orbit-node">
-              <strong>Health</strong>
-              <span>Navigation and records</span>
-            </div>
-            <div className="hope-orbit-node">
-              <strong>Family</strong>
-              <span>Children and stability</span>
-            </div>
-            <div className="hope-orbit-node">
-              <strong>Opportunity</strong>
-              <span>Learning and income</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="hope-proof-strip" aria-label="Platform principles">
-          <div className="hope-proof-grid">
-            <div className="hope-proof-item">
-              <strong>Consent first</strong>
-              <span>Women control participation and information sharing.</span>
-            </div>
-            <div className="hope-proof-item">
-              <strong>Privacy by design</strong>
-              <span>Protected records and role-based access from the start.</span>
-            </div>
-            <div className="hope-proof-item">
-              <strong>One connected plan</strong>
-              <span>Housing, health, family, and work support coordinate together.</span>
-            </div>
-            <div className="hope-proof-item">
-              <strong>Accountable benefits</strong>
-              <span>Every approved credit, payment, and sponsor contribution is traceable.</span>
-            </div>
-          </div>
-        </section>
-
-        <section id="services" className="hope-section">
-          <div className="hope-section-head">
-            <p className="hope-eyebrow">The New Hope network</p>
-            <h2>Support should work like one system.</h2>
-            <p>
-              Each module can operate independently, but the Infinity backbone allows authorized services to
-              coordinate around one protected plan. The woman remains the decision-maker throughout the process.
-            </p>
-          </div>
-
-          <div className="hope-service-grid">
-            {services.map((service, index) => (
-              <article className="hope-service-card" key={service.title}>
-                <div className="hope-service-index">0{index + 1}</div>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-                <span>{service.status}</span>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="backbone" className="hope-section">
-          <div className="hope-section-head">
-            <p className="hope-eyebrow">Infinity architecture</p>
-            <h2>New Hope carries the mission. Infinity carries the system.</h2>
-            <p>
-              Infinity provides reusable infrastructure that other approved organizations and developers can build
-              on: identity, permissions, benefits, scheduling, communications, records, analytics, and service routing.
-            </p>
-          </div>
-
-          <div className="hope-backbone">
-            <article className="hope-backbone-card">
-              <h3>Shared platform layers</h3>
-              <p>
-                The backbone is modular so New Hope can grow without placing every responsibility inside one application.
-              </p>
-              <div className="hope-layer-list">
-                <div className="hope-layer">
-                  <strong>Identity and consent</strong>
-                  <span>Verified access, permission history, and revocable sharing.</span>
-                </div>
-                <div className="hope-layer">
-                  <strong>Benefits and funding</strong>
-                  <span>Donations, grants, sponsorship fees, product revenue, and restricted assistance credits.</span>
-                </div>
-                <div className="hope-layer">
-                  <strong>Service coordination</strong>
-                  <span>Appointments, referrals, transportation, housing, education, and follow-through.</span>
-                </div>
-                <div className="hope-layer">
-                  <strong>Open building architecture</strong>
-                  <span>Documented modules and interfaces that approved teams can extend safely.</span>
-                </div>
-              </div>
-            </article>
-
-            <article className="hope-flow-card" aria-label="New Hope support flow">
-              {flow.map(([title, description], index) => (
-                <div className="hope-flow-step" key={title}>
-                  <div className="hope-flow-number">{index + 1}</div>
-                  <div>
-                    <strong>{title}</strong>
-                    <span>{description}</span>
-                  </div>
-                  <span className="hope-flow-status">Protected flow</span>
-                </div>
-              ))}
-            </article>
-          </div>
-        </section>
-
-        <section id="health" className="hope-health-shell">
-          <div className="hope-health-head">
-            <div>
-              <p className="hope-eyebrow">Working module 01</p>
-              <h2>Health Signal Workspace</h2>
-              <p>
-                The existing Infinity Signal Health application remains intact inside New Hope as an informational
-                pattern-tracking workspace. It does not diagnose conditions or replace professional care.
-              </p>
-            </div>
-            <span className="hope-module-badge">Interactive prototype</span>
-          </div>
-
-          <div className="main-layout">
-            <section className="left-col">
-              <SignalInput
-                onResult={handleResult}
-                onError={() => {}}
-                onLoading={() => {}}
-              />
-              {analysis && <RiskCard analysis={analysis} />}
-            </section>
-
-            <section className="right-col">
-              <div className="right-tabs">
-                <button
-                  className={`tab-btn ${rightTab === 'history' ? 'active' : ''}`}
-                  onClick={() => setRightTab('history')}
-                >
-                  Signal History
-                </button>
-                <button
-                  className={`tab-btn ${rightTab === 'knowledge' ? 'active' : ''}`}
-                  onClick={() => setRightTab('knowledge')}
-                >
-                  Knowledge Base
-                </button>
-              </div>
-
-              {rightTab === 'history' && <HistoryPanel key={historyKey} />}
-              {rightTab === 'knowledge' && <KnowledgePanel />}
-            </section>
-          </div>
-        </section>
-
-        <section id="governance" className="hope-section">
-          <div className="hope-section-head">
-            <p className="hope-eyebrow">Protection and accountability</p>
-            <h2>The platform must protect people from the system itself.</h2>
-          </div>
-
-          <div className="hope-governance">
-            <article className="hope-governance-card">
-              <h3>New Hope governance</h3>
-              <ul>
-                <li>Women-led program and product oversight.</li>
-                <li>Survivor and parent advisory participation.</li>
-                <li>Clear admission, privacy, complaint, and appeal procedures.</li>
-                <li>Qualified professionals for medical, legal, and child-safety decisions.</li>
-              </ul>
-            </article>
-            <article className="hope-governance-card">
-              <h3>Infinity platform controls</h3>
-              <ul>
-                <li>Role-based access with auditable permission changes.</li>
-                <li>No secret eligibility score or automatic denial of safety.</li>
-                <li>Separated shelter-location and public-service information.</li>
-                <li>Financial records that distinguish donations, sponsorship, sales, and benefits.</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-      </main>
-
-      <footer className="hope-footer">
-        <div className="hope-footer-inner">
-          <div>
-            <strong>New Hope</strong><br />
-            A women-and-children protection platform powered by Infinity architecture.
-          </div>
-          <div>
-            © {new Date().getFullYear()} New Hope / Infinity. Development prototype; not an emergency service or licensed provider.
-          </div>
-        </div>
-      </footer>
-    </div>
-  )
+export default function App(){
+  const [active,setActive]=useState('signals'); const [historyVersion,setHistoryVersion]=useState(0); const current=systems.find(s=>s.id===active)
+  return <div className="app">
+    <div className="safety">INFORMATIONAL RESEARCH APP · NOT A DIAGNOSIS · CALL 911 FOR AN EMERGENCY</div>
+    <header><a className="brand" href="#top"><b className="brand-mark">MH</b><span><strong>Medical Hope</strong><small>Living systems research app</small></span></a><nav><a href="#lab">Living Lab</a><a href="#signal-lab">Signal Workspace</a><a href="#robots">Robots</a></nav><a className="open" href="#signal-lab">Open app</a></header>
+    <main id="top">
+      <section className="hero"><div className="hero-copy"><div className="eyebrow">INFINITY-POWERED · APP-FIRST</div><h1>Medical research should feel <em>alive.</em></h1><p>A growing workspace where conversations become research robots, errors become reusable knowledge, and ideas move toward evidence, interactive models, and responsible prototypes.</p><div className="hero-actions"><a className="primary" href="#signal-lab">Use the working module</a><a className="secondary" href="#lab">Enter the living lab</a></div><div className="status-row"><span>Phone-ready</span><span>On-device fallback</span><span>Evidence states</span></div></div><LivingCore active={active}/></section>
+      <section className="lab" id="lab"><div className="lab-nav">{systems.map(s=><button className={active===s.id?'active':''} onClick={()=>setActive(s.id)} key={s.id}>{s.short}</button>)}</div><div className="lab-display"><div><span className="lab-status">{current.status}</span><h2>{current.title}</h2><p>{current.copy}</p></div><div className="telemetry"><span>Reader sweep <b>100 minds</b></span><span>Repository reach <b>176 found</b></span><span>Claim state <b>guarded</b></span></div></div></section>
+      <section className="robot-section" id="robots"><div className="section-kicker">ROBOT WORKFORCE</div><h2>Every pass makes the next build stronger.</h2><div className="robot-grid">{cards.map(([t,c],i)=><article key={t}><b>0{i+1}</b><h3>{t}</h3><p>{c}</p><span>READY FOR ROUTING</span></article>)}</div></section>
+      <div className="workspace"><SignalLab onSaved={()=>setHistoryVersion(v=>v+1)}/><History version={historyVersion}/></div>
+      <section className="proof"><div><div className="section-kicker">RESEARCH DISCIPLINE</div><h2>Build boldly. Label honestly.</h2></div><div className="proof-steps">{['Proposed idea','Evidence found','Simulated','Experimentally tested','Independently reproduced'].map((x,i)=><span key={x}><b>{i+1}</b>{x}</span>)}</div></section>
+    </main>
+    <footer><b>Medical Hope</b><span>Powered by Infinity architecture · development and informational software</span></footer>
+    <nav className="mobile-dock"><a href="#top">Home</a><a href="#lab">Lab</a><a href="#signal-lab">Signal</a><a href="#robots">Robots</a></nav>
+  </div>
 }
