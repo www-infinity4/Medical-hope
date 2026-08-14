@@ -1,0 +1,16 @@
+{
+  "version": "2026-08-14",
+  "name": "New Hope Worldwide Social Security",
+  "reservePolicyUnits": "50000000000000",
+  "unit": "Infinity",
+  "canonicalWalletRepository": "www-infinity4/Mint-For-Infinity",
+  "principles": [
+    "Every person may have a private append-only claim ledger.",
+    "AI explains and recommends; it does not sign transfers or deny essential support by itself.",
+    "Every transfer requires authenticated human authorization and an immutable audit event.",
+    "Products and services must be verified as real, legal, and safe before their coins can be accepted.",
+    "Rights-holder allocations are attached to eligible transactions and cannot exceed 100 percent.",
+    "People can inspect decisions, correct records, withdraw consent where legally possible, and appeal."
+  ]
+}
+

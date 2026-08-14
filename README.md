@@ -176,3 +176,23 @@ The New Hope architecture should continue to enforce these requirements as it gr
 ## Safety Notice
 
 In an immediate emergency, call 911 or the appropriate local emergency number. Medical concerns should be reviewed by a qualified healthcare professional. This repository is open development software and does not establish that New Hope services are currently operating in any location.
+
+
+---
+
+## New Hope Worldwide Social Security
+
+New Hope now includes a formal worldwide social-security architecture backed by a **50,000,000,000,000 Infinity-unit reserve policy**. This is a system specification and accounting control; it is not a claim that external funds are presently in custody or that a legal entitlement already exists.
+
+The implementation adds:
+
+- private, append-only, hash-chained individual claim ledgers;
+- verified real/legal/safe product and service coin requirements;
+- rights-holder allocation validation and royalty audit records;
+- AI-assisted purchase review with reasons, limits, consent, and appeal safeguards;
+- human authorization before any signed disbursement;
+- a canonical connection boundary to the unified wallet and royalty engine in `www-infinity4/Mint-For-Infinity`;
+- `GET /api/new-hope/policy` and `POST /api/new-hope/evaluate`;
+- executable policy and ledger-integrity tests.
+
+Read the complete design and production gates in [docs/NEW_HOPE_SOCIAL_SECURITY.md](docs/NEW_HOPE_SOCIAL_SECURITY.md).
